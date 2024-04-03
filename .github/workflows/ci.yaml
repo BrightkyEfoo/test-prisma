@@ -2,7 +2,7 @@ name: CI
 
 env:
   NODE_VERSION: "21.x"
-  FOLDER: /opt/applications/prisma-test
+  FOLDER: ~/applications/prisma-test
   IMAGE: brightky/prisma-test
   IMAGE_VERSION: latest
   DOCKER_NETWORK_NAME: myNet
