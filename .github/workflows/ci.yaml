@@ -22,7 +22,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             sudo rm -rf ${{ env.FOLDER }}
@@ -37,7 +37,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             docker network create ${{ env.DOCKER_NETWORK_NAME }}
@@ -51,7 +51,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             docker run postgres -p 5432:5432 --name db --network ${{ env.DOCKER_NETWORK_NAME }} -e POSTGRES_PASSWORD=12345678 -e POSTGRES_USER=root -e POSTGRES_DB=root postgres:latest -t postgres
@@ -66,7 +66,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "*"
           target: ${{ env.FOLDER }}
@@ -80,7 +80,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             cd ${{ env.FOLDER }}
@@ -96,7 +96,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             cd ${{ env.FOLDER }}
@@ -111,7 +111,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             docker run --network ${{ env.DOCKER_NETWORK_NAME }} ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }}
