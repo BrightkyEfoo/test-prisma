@@ -22,7 +22,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD}}
           script: |
             sudo rm -rf ${{ env.FOLDER }}
             sudo mkdir -p  ${{ env.FOLDER }}
@@ -31,14 +31,14 @@ jobs:
   create-docker-network:
     runs-on: ubuntu-latest
     steps:
-        - name: create docker network
-          uses: appleboy/ssh-action@v1.0.3
-          with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ secrets.SSH_USERNAME }}
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
-            script: |
-                docker network create ${{ env.DOCKER_NETWORK_NAME }}
+      - name: create docker network
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD}}
+          script: |
+            docker network create ${{ env.DOCKER_NETWORK_NAME }}
 
   init-postgres:
     runs-on: ubuntu-latest
@@ -49,7 +49,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD}}
           script: |
             docker run postgres -p 5432:5432 --name db --network ${{ env.DOCKER_NETWORK_NAME }} -e POSTGRES_PASSWORD=12345678 -e POSTGRES_USER=root -e POSTGRES_DB=root postgres:latest -t postgres
 
@@ -63,10 +63,10 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD}}
           source: "*"
           target: ${{ env.FOLDER }}
-        
+
   dockerize:
     runs-on: ubuntu-latest
     needs: [copy-files]
@@ -76,7 +76,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD}}
           script: |
             cd ${{ env.FOLDER }}
             docker build -t ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }}
@@ -91,7 +91,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD}}
           script: |
             cd ${{ env.FOLDER }}
             docker push ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }}
@@ -105,6 +105,6 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD}}
           script: |
             docker run --network ${{ env.DOCKER_NETWORK_NAME }} ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }}
