@@ -110,7 +110,7 @@ jobs:
           script: |
             cd ${{ env.FOLDER }}
             docker build -t ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} .
-  build-app:
+  run-app:
     runs-on: ubuntu-latest
     needs: [dockerize]
     steps:
@@ -125,19 +125,17 @@ jobs:
             docker run -d -p 3000:3000 --name app -t ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }}
             docker network connect ${{ env.DOCKER_NETWORK_NAME }} app || true
 
-  run-app:
-    runs-on: ubuntu-latest
-    needs: [build-app]
-    steps:
-      - name: run app
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            docker exec -d app 'sh npx prisma migrate dev --name init'
-            docker exec -d app 'npx prisma generate'
-            docker exec -d app 'npm run start'
+#   run-app:
+#     runs-on: ubuntu-latest
+#     needs: [build-app]
+#     steps:
+#       - name: run app
+#         uses: appleboy/ssh-action@v1.0.3
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USERNAME }}
+#           key: ${{ secrets.SSH_PRIVATE_KEY }}
+#           port: 22
+#           script: |
+#             docker run -d app 'sh npx prisma migrate dev --name init | npx prisma generate | npm run start'
             
