@@ -40,7 +40,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker network create ${{ env.DOCKER_NETWORK_NAME }}
+            docker network create --attachable ${{ env.DOCKER_NETWORK_NAME }}
 
   init-postgres:
     runs-on: ubuntu-latest
