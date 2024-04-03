@@ -10,6 +10,7 @@ RUN npm install
 
 RUN echo "DATABASE_URL=$DATABASE_URL" >> .env
 
+
 RUN npm run build
 
 RUN npx prisma migrate dev --name init
@@ -19,6 +20,8 @@ RUN npx prisma generate
 ENV NODE_ENV production
 
 ENV PORT=3000
+
+RUN echo "PORT=$PORT" >> .env
 
 USER node
 
