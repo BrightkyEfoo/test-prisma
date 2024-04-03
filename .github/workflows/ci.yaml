@@ -123,7 +123,7 @@ jobs:
           port: 22
           script: |
             docker run -d -p 3000:3000 --name app -t ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }}
-            docker network connect ${{ env.DOCKER_NETWORK_NAME }} app
+            docker network connect ${{ env.DOCKER_NETWORK_NAME }} app || true
 
   run-app:
     runs-on: ubuntu-latest
