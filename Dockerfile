@@ -1,12 +1,14 @@
 FROM node:hydrogen-alpine as base
 
+RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
+
 USER node
 
-WORKDIR /usr/src/app
+WORKDIR /home/node/app
 
 ENV DATABASE_URL="postgresql://root:12345678@db:5432/testprisma?schema=public"
 
-COPY . .
+COPY --chown=node:node . .
 
 RUN npm install
 
