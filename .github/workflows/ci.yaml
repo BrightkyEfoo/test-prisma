@@ -122,7 +122,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker run -d -p 3000:3000 --cidfile app.cid --name app ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} sh
+            docker run -d -p 3000:3000 --cidfile app.cid --name app ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} tail -f /dev/null
             docker network connect ${{ env.DOCKER_NETWORK_NAME }} app || true
 
   run-app:
