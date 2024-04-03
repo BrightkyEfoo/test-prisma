@@ -122,7 +122,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker run -d -p 3000:3000 --name app ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} sh
+            docker run -d -p 3000:3000 --cidfile app.cid --name app ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} sh
             docker network connect ${{ env.DOCKER_NETWORK_NAME }} app || true
 
   run-app:
@@ -137,7 +137,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker exec -d ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} 'npx prisma migrate dev --name init'
-            docker exec -d ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} 'npx prisma generate'
-            docker exec -d ${{ env.IMAGE }}:${{ env.IMAGE_VERSION }} 'npm run start'
+            docker exec -d (cat app.cid) 'npx prisma migrate dev --name init'
+            docker exec -d (cat app.cid) 'npx prisma generate'
+            docker exec -d (cat app.cid) 'npm run start'
             
