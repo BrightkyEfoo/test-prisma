@@ -14,6 +14,9 @@ const initApp = () => {
 
   app.use("/api/v1/users", userRouter);
 
+  app.get("/", (_req, res) => {
+    res.send("Welcome to the PapsNetworks API!\n petit cul");
+  });
   // end routing
 
   app.use(errorHandler);
