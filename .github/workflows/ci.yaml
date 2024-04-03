@@ -25,9 +25,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            sudo rm -rf ${{ env.FOLDER }}
-            sudo mkdir -p  ${{ env.FOLDER }}
-            sudo chmod ugo+rwx  ${{ env.FOLDER }}
+            rm -rf ${{ env.FOLDER }}
+            mkdir -p  ${{ env.FOLDER }}
+            chmod ugo+rwx  ${{ env.FOLDER }}
 
   create-docker-network:
     runs-on: ubuntu-latest
