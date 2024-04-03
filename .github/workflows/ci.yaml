@@ -40,7 +40,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker network rm ${{ env.DOCKER_NETWORK_NAME }} || true
+            docker network rm ${{ env.DOCKER_NETWORK_NAME }} ; true
             docker network create ${{ env.DOCKER_NETWORK_NAME }}
 
   init-postgres:
