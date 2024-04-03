@@ -55,7 +55,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker run postgres -p 5432:5432 --name db --network ${{ env.DOCKER_NETWORK_NAME }} -e POSTGRES_PASSWORD=12345678 -e POSTGRES_USER=root -e POSTGRES_DB=root postgres:latest -t postgres
+            docker run postgres -p 5432:5432 --name db --network ${{ env.DOCKER_NETWORK_NAME }} -e POSTGRES_PASSWORD='12345678' -e POSTGRES_USER=root -e POSTGRES_DB=root postgres:latest -t postgres
 
   copy-files:
     runs-on: ubuntu-latest
