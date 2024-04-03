@@ -137,5 +137,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker exec -d nom_conteneur sh -c "chmod +x setup.sh && ./setup.sh"
+            docker exec -d app sh -c "chmod +x setup.sh && ./setup.sh"
             
