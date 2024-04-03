@@ -1,5 +1,7 @@
 FROM node:hydrogen-alpine as base
 
+USER node
+
 WORKDIR /usr/src/app
 
 ENV DATABASE_URL="postgresql://root:12345678@db:5432/testprisma?schema=public"
