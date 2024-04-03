@@ -74,7 +74,7 @@ jobs:
 
   dockerize:
     runs-on: ubuntu-latest
-    needs: [copy-files,create-docker-network]
+    needs: [copy-files,init-postgres]
     steps:
       - name: dockerize
         uses: appleboy/ssh-action@v1.0.3
