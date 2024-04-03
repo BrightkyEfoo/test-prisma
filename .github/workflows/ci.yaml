@@ -137,7 +137,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker exec -d app 'npx prisma migrate dev --name init'
-            docker exec -d app 'npx prisma generate'
-            docker exec -d app 'npm run start'
+            docker exec -d app 'sh setup.sh'
             
